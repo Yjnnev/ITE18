@@ -1,0 +1,16 @@
+# Individual Exit Responses
+
+**1. Which variable is retained by the counter closure, and why does its value survive between accepted requests?**
+The `count` variable declared inside `makeCounter()` is retained. Each returned function keeps a live reference to its own `count` in the closure's scope, so the variable isn't garbage-collected between calls — it persists in memory for as long as the returned function (`nextAttempt` or `nextPing`) exists.
+
+**2. Why do B and C appear before D in the execution trace?**
+`B` is logged synchronously, so it runs before the event loop even considers queued tasks. `C` is a microtask (from `Promise.resolve().then`), and microtasks always drain completely before the next macrotask runs. `D` is a macrotask (`setTimeout`), so it has to wait for both the synchronous code and the microtask queue to finish first.
+
+**3. What exactly pauses at await, and what can still happen while the request is pending?**
+`await` pauses execution of the `async` submit handler function — not the whole page. The rest of the JavaScript engine, including the event loop, keeps running, so clicks on the "Test page response" button (and its own closure counter) still fire and update the pings display while the 1200ms mock request is in flight.
+
+**4. How do catch and finally differ when a request fails?**
+`catch` only runs when the `await`ed promise rejects — it's where the error is handled, e.g. showing `error.message` and logging `E: failure`. `finally` runs *regardless* of success or failure, so it's used for cleanup that must always happen: resetting `busy` and re-enabling the load button.
+
+**5. What do extends, super(title), and super.describe() each contribute to TimedResource?**
+`extends Resource` sets up the prototype chain so `TimedResource` inherits `Resource`'s methods. `super(title)` calls the parent constructor to initialize `this.title` before `TimedResource` can set its own `this.minutes`. `super.describe()` calls the parent's original `describe()` (returning just the title) so the overridden method can build on it rather than duplicating that logic, producing `"Title | X min"`.

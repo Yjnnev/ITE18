@@ -1,4 +1,4 @@
-// ---------- Mock service (supplied) ----------
+
 function requestResources(shouldFail) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -15,7 +15,7 @@ function requestResources(shouldFail) {
   });
 }
 
-// ---------- Step 1: closure-based counters ----------
+// Step 1: closure-based counters
 function makeCounter() {
   let count = 0;
   return function () {
@@ -24,7 +24,7 @@ function makeCounter() {
   };
 }
 
-// ---------- Step 2: classes ----------
+// Step 2: classes
 class Resource {
   constructor(title) {
     this.title = title;
@@ -44,7 +44,7 @@ class TimedResource extends Resource {
   }
 }
 
-// ---------- Step 3: element selection and state ----------
+// Step 3: element selection and state
 const form = document.getElementById("resourceForm");
 const failNext = document.getElementById("failNext");
 const loadButton = document.getElementById("loadButton");
@@ -60,7 +60,7 @@ let busy = false;
 const nextAttempt = makeCounter();
 const nextPing = makeCounter();
 
-// ---------- Step 4: trace logging ----------
+// Step 4: trace logging
 function log(message) {
   traceEl.textContent += message + "\n";
 }
@@ -73,7 +73,7 @@ function clearList() {
   listEl.textContent = "";
 }
 
-// ---------- Step 3/5: submit handler ----------
+// Step 3/5: submit handler
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -123,7 +123,7 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-// ---------- Step 6: response click listener ----------
+// Step 6: response click listener 
 pingButton.addEventListener("click", () => {
   pingsEl.textContent = nextPing();
 });
