@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Class Resource Loader</title>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>Class Resource Loader</h1>
+  <form id="resourceForm">
+    <label><input id="failNext" type="checkbox">
+    Simulate failure for this request</label>
+    <button id="loadButton" type="submit">Load resources</button>
+  </form>
+  <p>Attempts: <span id="attempts">0</span></p>
+  <p id="status" role="status">Ready.</p>
+  <ul id="resourceList"></ul>
+  <button id="pingButton" type="button">Test page response</button>
+  <p>Response clicks: <span id="pings">0</span></p>
+  <h2>Execution trace</h2>
+  <pre id="trace"></pre>
+</body>
+</html>
